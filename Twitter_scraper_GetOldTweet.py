@@ -7,6 +7,7 @@ Created on Mon Jun 29 11:12:56 2020
 import GetOldTweets3 as got
 import pandas as pd
 
+
 #Function-Query by Username
 # Function the pulls tweets from a specific username and turns to csv file
 
@@ -31,7 +32,7 @@ def username_tweets_to_csv(username, count):
 # Function that pulls tweets based on a general search query and turns to csv file
 
 # Parameters: (text query you want to search), (max number of most recent tweets to pull from)
-def text_query_to_csv(text_query, count):
+def text_query_to_csv(text_query,since_date,until_date, count):
     # Creation of query object
     tweetCriteria = got.manager.TweetCriteria().setQuerySearch(text_query)\
                                                 .setSince(since_date).setUntil(until_date).setMaxTweets(count)
@@ -45,17 +46,25 @@ def text_query_to_csv(text_query, count):
     tweets_df = pd.DataFrame(text_tweets, columns = ['Datetime', 'Text'])
 
     # Converting tweets dataframe to csv file
-    tweets_df.to_csv('{}-{}k-tweets.csv'.format(text_query, int(count/1000)), sep=',')
+    tweets_df.to_csv('{}-{}-tweets.csv'.format(text_query, since_date), sep=',')
 
 #Query by Username
 
 #Query by Text Search
 # Input search query to scrape tweets and name csv file
 # Max recent tweets pulls x amount of most recent tweets from that user
-text_query = 'Trade War'
-since_date = '2018-03-01'
-until_date = '2019-10-31'
+#text_query = 'Donald Trump'
+#since_date = '2016-01-01'
+#until_date = '2016-10-31'
+#count = 10000
+
+# Calling function to query X amount of relevant tweets and create a CSV file
+#text_query_to_csv(text_query,since_date,until_date, count)
+
+text_query = 'Donald Trump'
+since_date = '2020-01-01'
+until_date = '2020-06-28'
 count = 10000
 
 # Calling function to query X amount of relevant tweets and create a CSV file
-text_query_to_csv(text_query, count)
+text_query_to_csv(text_query,since_date,until_date, count)

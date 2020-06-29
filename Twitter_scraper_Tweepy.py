@@ -10,6 +10,8 @@ import time
 
 
 # Credentials
+
+
 consumer_key = "************"
 consumer_secret = "*************"
 access_token = "*************"
@@ -63,16 +65,16 @@ def text_query_to_csv(text_query,count):
 #Query by Username
 # Input username(s) to scrape tweets and name csv file
 # Max recent tweets pulls x amount of most recent tweets from that user
-username = 'CDCgov'
-count = 5000
+#username = 'CDCgov'
+#count = 5000
 
 # Calling function to turn username's past x amount of tweets into a CSV file
-username_tweets_to_csv(username, count)
+#username_tweets_to_csv(username, count)
 
 #Query by Text Search
 # Input search query to scrape tweets and name csv file
 # Max recent tweets pulls x amount of most recent tweets from that user
-text_query = 'COVID19'
+text_query = 'Donald Trump'
 count = 5000
 
 # Calling function to query X amount of relevant tweets and create a CSV file
