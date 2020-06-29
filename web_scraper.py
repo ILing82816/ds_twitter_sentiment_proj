@@ -4,45 +4,85 @@ Created on Tue Jun 23 09:44:03 2020
 
 @author: USER
 """
-import pandas as pd 
-import datetime as dt 
-from twitterscraper import query_tweets
-#from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
-#from langdetect import detect 
+import tweepy
+import pandas as pd
+import time
 
 
-#def detector(x):
-#    try:
-#       return detect(x)
-#    except:
-#        None 
+# Credentials
+consumer_key = "J5fW2dmfskjtHxFnxMZPkJszp"
+consumer_secret = "wZ5XEkBtLzm0NVPwtyg7x9qhQ9fqeqIb7p0xDMzk2mPzrZEdJS"
+access_token = "1275447406637625351-fDUc6MCvajg0cBfv15mnjJOEQdT0da"
+access_token_secret = "dUBxbK8YRf7LmUOOmW7riylgaUAHRLlqVGajJ9tGDoUNz"
 
-#Build Analyzer Object        
-#analyzer = SentimentIntensityAnalyzer()
+auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+auth.set_access_token(access_token, access_token_secret)
+api = tweepy.API(auth,wait_on_rate_limit=True)
 
-#Trade War - 2018
-begin_date_one = dt.date(2018,3,22)
-end_date_one = dt.date(2018,4,20)
-begin_date_two = dt.date(2018,5,29)
-end_date_two = dt.date(2018,9,24)
+#Function-Query by Username
+tweets = []
+def username_tweets_to_csv(username,count):
+    try: 
+    # Pulling individual tweets from query
+        for tweet in api.user_timeline(id=username, count=count):
+
+            # Adding to list that contains all tweets
+            tweets.append((tweet.created_at,tweet.id,tweet.text))
+
+            # Creation of dataframe from tweets list
+            tweetsdf = pd.DataFrame(tweets,columns=['Datetime', 'Tweet Id', 'Text'])
+
+            # Converting dataframe to CSV
+            tweetsdf.to_csv('{}-tweets.csv'.format(username)) 
+
+    except BaseException as e:
+          print('failed on_status,',str(e))
+          time.sleep(3)
+
+#Function-Query by Text Search
+tweets = []
+
+def text_query_to_csv(text_query,count):
+    try:
+    # Pulling individual tweets from query
+        for tweet in api.search(q=text_query, count=count):
+
+          # Adding to list that contains all tweets
+          tweets.append((tweet.created_at,tweet.id,tweet.text))
+
+          # Creation of dataframe from tweets list
+          tweetsdf = pd.DataFrame(tweets,columns=['Datetime', 'Tweet Id', 'Text'])
+
+          # Converting dataframe to CSV
+          tweetsdf.to_csv('{}-tweets.csv'.format(text_query)) 
+
+    except BaseException as e:
+        print('failed on_status,',str(e))
+        time.sleep(3)
+
+#Query by Username
+# Input username(s) to scrape tweets and name csv file
+# Max recent tweets pulls x amount of most recent tweets from that user
+username = 'CDCgov'
+count = 5000
+
+# Calling function to turn username's past x amount of tweets into a CSV file
+username_tweets_to_csv(username, count)
+
+#Query by Text Search
+# Input search query to scrape tweets and name csv file
+# Max recent tweets pulls x amount of most recent tweets from that user
+text_query = 'COVID19'
+count = 5000
+
+# Calling function to query X amount of relevant tweets and create a CSV file
+text_query_to_csv(text_query, count)
 
 
-#query tweets with our parameters
-tweets_one = query_tweets("#TradeWar", begindate = begin_date_one, enddate= end_date_one, limit = 1000, lang= "english")
-tweets_two = query_tweets("#TradeWar", begindate = begin_date_two, enddate = end_date_two, limit = 1000, lang= "english")
 
-#covert to dataframe                         
-df_one = pd.DataFrame(t.__dict__ for t in tweets_one)
-df_two = pd.DataFrame(t.__dict__ for t in tweets_two)
 
-#filter for english tweets
-#df_one['lang'] = df_one['text'].apply(lambda x:detector(x))
-#df_one = df_one[df_one['lang'] == 'en']
-#df_two['lang'] = df_two['text'].apply(lambda x: detector(x))
-#df_two = df_two[df_two['lang'] == 'en'] 
 
-#save files
-df_one.to_csv('tw2018one_tweets_before_clean.csv')
-df_two.to_csv('tw2018two_tweets_after_clean.csv')
+
+
 
 
