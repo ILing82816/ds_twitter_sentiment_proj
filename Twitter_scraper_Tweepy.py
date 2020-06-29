@@ -10,10 +10,10 @@ import time
 
 
 # Credentials
-consumer_key = "J5fW2dmfskjtHxFnxMZPkJszp"
-consumer_secret = "wZ5XEkBtLzm0NVPwtyg7x9qhQ9fqeqIb7p0xDMzk2mPzrZEdJS"
-access_token = "1275447406637625351-fDUc6MCvajg0cBfv15mnjJOEQdT0da"
-access_token_secret = "dUBxbK8YRf7LmUOOmW7riylgaUAHRLlqVGajJ9tGDoUNz"
+consumer_key = "***************"
+consumer_secret = "********************"
+access_token = "*****************"
+access_token_secret = "**********************"
 
 auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
 auth.set_access_token(access_token, access_token_secret)
@@ -63,16 +63,16 @@ def text_query_to_csv(text_query,count):
 #Query by Username
 # Input username(s) to scrape tweets and name csv file
 # Max recent tweets pulls x amount of most recent tweets from that user
-username = 'CDCgov'
-count = 5000
+#username = 'CDCgov'
+#count = 5000
 
 # Calling function to turn username's past x amount of tweets into a CSV file
-username_tweets_to_csv(username, count)
+#username_tweets_to_csv(username, count)
 
 #Query by Text Search
 # Input search query to scrape tweets and name csv file
 # Max recent tweets pulls x amount of most recent tweets from that user
-text_query = 'COVID19'
+text_query = 'Donald Trump'
 count = 5000
 
 # Calling function to query X amount of relevant tweets and create a CSV file
