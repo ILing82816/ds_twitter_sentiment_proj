@@ -63,7 +63,7 @@ def text_query_to_csv(text_query,since_date,until_date, count):
 
 text_query = 'Donald Trump'
 since_date = '2020-01-01'
-until_date = '2020-06-28'
+until_date = '2020-09-15'
 count = 10000
 
 # Calling function to query X amount of relevant tweets and create a CSV file
